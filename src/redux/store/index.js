@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reducers from "../slice";
+import rootReducers from "../slice";
+
 const store = configureStore({
-  reducer: reducers,
+    reducer: rootReducers,
 });
 
 export default store;
+

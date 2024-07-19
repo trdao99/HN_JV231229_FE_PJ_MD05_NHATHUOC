@@ -1,8 +1,12 @@
-import { combineReducers } from "redux";
-import AdminSlice from "./AdminSlice";
 
-const reducers = combineReducers({
-  admin: AdminSlice,
+import { combineReducers } from "@reduxjs/toolkit";
+import categorySlice from "./categorySlice";
+import AdminSlice from "./AdminSlice
+
+const rootReducers = combineReducers({
+    category : categorySlice,
+    admin: AdminSlice,
 });
 
-export default reducers;
+export default rootReducers;
+
