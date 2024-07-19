@@ -1,12 +1,7 @@
 import "./App.css";
-import RouterTag from "./RouterTags";
 
 function App() {
-  return (
-    <>
-      <RouterTag />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
