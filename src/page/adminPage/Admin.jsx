@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import Category from "./Category";
 
 function Admin() {
   const [showFull, setShowFull] = useState(false);
@@ -39,21 +40,21 @@ function Admin() {
 
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all duration-300 ease-in-out"
-            to="/ct1"
+            to="/admin/category"
           >
             <DashboardOutlined className="text-[20px]" />
-            {showFull ? " : this is link 1 title" : ""}
+            {showFull ? " Danh mục" : ""}
           </NavLink>
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all duration-300 ease-in-out"
-            to="/ct2"
+            to="/admin/ct2"
           >
             <CommentOutlined className="text-[20px]" />
             {showFull ? " : this is link 2 title" : ""}
           </NavLink>
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all duration-300 ease-in-out"
-            to="/ct3"
+            to="/admin/ct3"
           >
             <ProductOutlined className="text-[20px]" />
             {showFull ? ": this is link 3 title" : ""}

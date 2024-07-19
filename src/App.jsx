@@ -1,10 +1,13 @@
-import "./App.css";
-import RouterTag from "./RouterTags";
+import Category from "./page/adminPage/Category";
 
 function App() {
   return (
     <>
-      <RouterTag />
+      <Routes>
+        <Route path="/admin" element={<LayoutAdmin/>}>
+          <Route path="category" element={<Category/>}/>
+        </Route>
+      </Routes>
     </>
   );
 }
