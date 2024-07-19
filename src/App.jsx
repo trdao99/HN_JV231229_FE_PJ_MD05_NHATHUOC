@@ -1,5 +1,4 @@
 import Category from "./page/adminPage/Category";
-
 function App() {
   return (
     <>
@@ -10,6 +9,8 @@ function App() {
       </Routes>
     </>
   );
+
+
 }
 
 export default App;

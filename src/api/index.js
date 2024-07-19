@@ -1,9 +1,15 @@
-import axios from "axios"
-const BASE_URL = axios.create({
-    baseURL: "http://localhost:8080/api/v1/",
-    headers: {
-        "Content-Type": "application/json",
-    },
+import axios from "axios";
+
+export const BASE_URL = axios.create({
+  baseURL: "http://localhost:8080/api/v1/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-export default BASE_URL;
+export const ADMIN_URL = axios.create({
+  baseURL: `${BASE_URL.defaults.baseURL}admin/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});

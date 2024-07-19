@@ -3,6 +3,7 @@ import {
   CommentOutlined,
   DashboardOutlined,
   ProductOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
@@ -57,7 +58,26 @@ function Admin() {
             to="/admin/ct3"
           >
             <ProductOutlined className="text-[20px]" />
-            {showFull ? ": this is link 3 title" : ""}
+            {showFull ? (
+              <span className="opacity-100 transition-all duration-500">
+                : this is link 3 title"
+              </span>
+            ) : (
+              <span className="opacity-0"></span>
+            )}
+          </NavLink>
+          <NavLink
+            className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400  "
+            to="/admin/user"
+          >
+            <UserOutlined className="text-[20px]" />
+            {showFull ? (
+              <span className="opacity-100 transition-all duration-500">
+                : User"
+              </span>
+            ) : (
+              <span className="opacity-0"></span>
+            )}
           </NavLink>
         </div>
         <div className="flex-1 p-4 bg-gray-300 h-[100vh] ">
@@ -76,7 +96,7 @@ function Admin() {
               />
             </div>
           </nav>
-          <div className="p-4 bg-white shadow-md rounded-lg h-[90%] transition-all duration-300 ease-in-out">
+          <div className="p-4 bg-white shadow-md rounded-lg h-[90%] transition-all duration-300 ease-in-out overflow-auto">
             <Outlet />
           </div>
         </div>
