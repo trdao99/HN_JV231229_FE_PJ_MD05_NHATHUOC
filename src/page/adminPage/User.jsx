@@ -1,7 +1,7 @@
 // User Component
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { block, getUser, searchUser } from "../../service/AdminService";
+import { block, getUser, searchUser } from "../../services/AdminService";
 import moment from "moment/moment";
 import { Button, Pagination, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
