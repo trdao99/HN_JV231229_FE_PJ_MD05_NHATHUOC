@@ -89,11 +89,13 @@ function Admin() {
               <BarsOutlined />
             </button>
             <div className="bg-blue-600 p-1 rounded-lg">
-              <img
-                class="h-auto w-[149px] cursor-pointer"
-                src="https://prod-cdn.pharmacity.io/e-com/images/static-website/20240706161420-0-logo-white-text.svg"
-                alt="Pharmacity Logo"
-              />
+              <a href="/">
+                <img
+                  class="h-auto w-[149px] cursor-pointer"
+                  src="https://prod-cdn.pharmacity.io/e-com/images/static-website/20240706161420-0-logo-white-text.svg"
+                  alt="Pharmacity Logo"
+                />
+              </a>
             </div>
           </nav>
           <div className="p-4 bg-white shadow-md rounded-lg h-[90%] transition-all duration-300 ease-in-out overflow-auto">

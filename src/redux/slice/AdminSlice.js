@@ -48,10 +48,11 @@ const adminSlice = createSlice({
     builder.addCase(searchUser.fulfilled, (state, action) => {
       console.log(action.payload);
       state.loading = "successed";
-      state.data = action.payload;
+      state.data = action.payload.content;
     });
     builder.addCase(searchUser.rejected, (state, error) => {
       state.loading = "error";
+      console.log(error);
       state.error = error;
     });
   },

@@ -32,13 +32,13 @@ export const updateCategory = createAsyncThunk(
         });
         return response.data;
     }
+
 );
 
 export const deleteCategory = createAsyncThunk(
-    "category/deleteCategory",
-    async (categoryId) => {
-        await BASE_URL[DELETE](`admin/category/${categoryId}`);
-        return categoryId;
-    }
+  "category/deleteCategory",
+  async (categoryId) => {
+    await BASE_URL[DELETE](`admin/category/${categoryId}`);
+    return categoryId;
+  }
 );
-
