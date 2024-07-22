@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { block, getUser, searchUser } from "../../service/AdminService";
+import { block, getUser, searchUser } from "../../services/AdminService";
 const adminSlice = createSlice({
   name: "admin",
   initialState: {

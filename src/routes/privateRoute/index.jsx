@@ -1,6 +1,7 @@
 import PrivateRoute from "../../features/protectedRouter/PrivateRoute";
 import Category from "../../page/adminPage/Category";
 import LayoutAdmin from "../../layouts/admin";
+import User from "../../page/adminPage/User";
 
 const privateRoutes = [
     {
@@ -10,6 +11,10 @@ const privateRoutes = [
             {
                 path: "category",
                 element : <Category/>,
+            },
+            {
+                path: "user",
+                element: <User />,
             },
         ],
     },
