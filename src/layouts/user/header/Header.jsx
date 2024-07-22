@@ -1,11 +1,29 @@
 import React, { useState } from "react";
+import AuthModal from "../../../components/base/modal/AuthModal";
+import { Cookies } from "react-cookie";
 
 function Header() {
   const [rotate, setRotate] = useState(false);
-
+  const [auth, setAuth] = useState(false);
   const handleCategories = () => {
     setRotate((prevRotate) => !prevRotate);
   };
+  const handleAuth = () => {
+    setAuth((preAuth) => !preAuth);
+  };
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const handleLogout = () => {
+    const cookie = new Cookies();
+    cookie.remove("token");
+    localStorage.removeItem("userLogin");
+    window.location.href = "/";
+  };
+  const handleUserDetails = null;
   return (
     <>
       <div className="top-0 hidden md:inline">
@@ -275,28 +293,98 @@ function Header() {
                         </div>
                       </div>
                     </div>
-                    <div className=" relative flex-1 md:flex md:justify-end ">
-                      {/* <span className="border-color-white absolute bottom-[6px] left-0 top-[6px] hidden border-l-[1px] md:inline-block " /> */}
-                      <button
-                        data-size="sm"
-                        type="button"
-                        className="relative justify-center outline-none font-semibold bg-white border border-neutral-200 hover:bg-bg-white hover:text-primary-500 focus:text-primary-500 text-sm px-4 py-2 h-9 items-center rounded-full flex "
-                      >
-                        <span className="p-icon inline-flex align-[-0.125em] justify-center max-h-full max-w-full m-[-1] mr-1 h-6 w-6 px-0">
-                          <svg
-                            viewBox="0 0 25 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                    {userLogin ? (
+                      <>
+                        <div className="relative flex-1 md:flex md:justify-end">
+                          <button
+                            data-size="sm"
+                            type="button"
+                            className="relative justify-center outline-none font-semibold bg-white border border-neutral-200 hover:bg-bg-white hover:text-primary-500 focus:text-primary-500 text-sm px-4 py-2 h-9 items-center rounded-full flex"
+                            onClick={toggleDropdown}
                           >
-                            <path
-                              d="M20.0711 4.92895C18.1823 3.0402 15.6711 2 13 2C10.3289 2 7.8177 3.0402 5.92891 4.92895C4.0402 6.8177 3 9.32891 3 12C3 14.6711 4.0402 17.1823 5.92891 19.0711C7.8177 20.9598 10.3289 22 13 22C15.6711 22 18.1823 20.9598 20.0711 19.0711C21.9598 17.1823 23 14.6711 23 12C23 9.32891 21.9598 6.8177 20.0711 4.92895ZM13 20.8281C10.3879 20.8281 8.03762 19.6874 6.41984 17.8785C7.42277 15.2196 9.99016 13.3281 13 13.3281C11.0584 13.3281 9.48438 11.7541 9.48438 9.8125C9.48438 7.87086 11.0584 6.29688 13 6.29688C14.9416 6.29688 16.5156 7.87086 16.5156 9.8125C16.5156 11.7541 14.9416 13.3281 13 13.3281C16.0098 13.3281 18.5772 15.2196 19.5802 17.8785C17.9624 19.6874 15.6121 20.8281 13 20.8281Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
-                        <span className="text-[13px]">Đăng nhập/ Đăng ký</span>
-                      </button>
-                    </div>
+                            <span className="p-icon inline-flex align-[-0.125em] justify-center max-h-full max-w-full m-[-1] mr-1 h-6 w-6 px-0">
+                              <svg
+                                viewBox="0 0 25 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M20.0711 4.92895C18.1823 3.0402 15.6711 2 13 2C10.3289 2 7.8177 3.0402 5.92891 4.92895C4.0402 6.8177 3 9.32891 3 12C3 14.6711 4.0402 17.1823 5.92891 19.0711C7.8177 20.9598 10.3289 22 13 22C15.6711 22 18.1823 20.9598 20.0711 19.0711C21.9598 17.1823 23 14.6711 23 12C23 9.32891 21.9598 6.8177 20.0711 4.92895ZM13 20.8281C10.3879 20.8281 8.03762 19.6874 6.41984 17.8785C7.42277 15.2196 9.99016 13.3281 13 13.3281C11.0584 13.3281 9.48438 11.7541 9.48438 9.8125C9.48438 7.87086 11.0584 6.29688 13 6.29688C14.9416 6.29688 16.5156 7.87086 16.5156 9.8125C16.5156 11.7541 14.9416 13.3281 13 13.3281C16.0098 13.3281 18.5772 15.2196 19.5802 17.8785C17.9624 19.6874 15.6121 20.8281 13 20.8281Z"
+                                  fill="currentColor"
+                                />
+                              </svg>
+                            </span>
+                            <span className="text-[13px]">
+                              {userLogin.username}
+                            </span>
+                          </button>
+                          {isDropdownOpen && (
+                            <div className="absolute top-9 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                              <button
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onClick={handleUserDetails}
+                              >
+                                Thông tin cá nhân
+                              </button>
+                              <button
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onClick={null}
+                              >
+                                Lịch sử đơn hàng
+                              </button>
+                              <button
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onClick={null}
+                              >
+                                Mã giảm giá
+                              </button>
+                              <button
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onClick={null}
+                              >
+                                Địa chỉ nhận hàng
+                              </button>
+                              <hr></hr>
+                              <button
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onClick={handleLogout}
+                              >
+                                Đăng xuất
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className=" relative flex-1 md:flex md:justify-end ">
+                          {/* <span className="border-color-white absolute bottom-[6px] left-0 top-[6px] hidden border-l-[1px] md:inline-block " /> */}
+                          <button
+                            data-size="sm"
+                            type="button"
+                            className="relative justify-center outline-none font-semibold bg-white border border-neutral-200 hover:bg-bg-white hover:text-primary-500 focus:text-primary-500 text-sm px-4 py-2 h-9 items-center rounded-full flex "
+                            onClick={handleAuth}
+                          >
+                            <span className="p-icon inline-flex align-[-0.125em] justify-center max-h-full max-w-full m-[-1] mr-1 h-6 w-6 px-0">
+                              <svg
+                                viewBox="0 0 25 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M20.0711 4.92895C18.1823 3.0402 15.6711 2 13 2C10.3289 2 7.8177 3.0402 5.92891 4.92895C4.0402 6.8177 3 9.32891 3 12C3 14.6711 4.0402 17.1823 5.92891 19.0711C7.8177 20.9598 10.3289 22 13 22C15.6711 22 18.1823 20.9598 20.0711 19.0711C21.9598 17.1823 23 14.6711 23 12C23 9.32891 21.9598 6.8177 20.0711 4.92895ZM13 20.8281C10.3879 20.8281 8.03762 19.6874 6.41984 17.8785C7.42277 15.2196 9.99016 13.3281 13 13.3281C11.0584 13.3281 9.48438 11.7541 9.48438 9.8125C9.48438 7.87086 11.0584 6.29688 13 6.29688C14.9416 6.29688 16.5156 7.87086 16.5156 9.8125C16.5156 11.7541 14.9416 13.3281 13 13.3281C16.0098 13.3281 18.5772 15.2196 19.5802 17.8785C17.9624 19.6874 15.6121 20.8281 13 20.8281Z"
+                                  fill="currentColor"
+                                />
+                              </svg>
+                            </span>
+                            <span className="text-[13px]">
+                              Đăng nhập/ Đăng ký
+                            </span>
+                          </button>
+                          {auth && <AuthModal onClose={handleAuth} />}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
