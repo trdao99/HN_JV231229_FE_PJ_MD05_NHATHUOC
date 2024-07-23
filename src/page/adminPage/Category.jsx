@@ -17,7 +17,6 @@ export default function Category() {
 
   const dispatch = useDispatch();
   const [editCategory, setEditCategory] = useState(null);
-  console.log(editCategory);
   const [modalVisible, setModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [file, setFile] = useState(null);
@@ -119,6 +118,11 @@ export default function Category() {
       key: 'description',
     },
     {
+      title: 'Ngày tạo',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+    },
+    {
       title: 'Trạng Thái',
       dataIndex:'status',
       key:'status',
@@ -128,7 +132,7 @@ export default function Category() {
       title: 'Hình ảnh',
       dataIndex: 'image',
       key: 'image',
-      render: (image) => (image ? <img src={image} alt="Image category" style={{width: 50, height: 50}}/> : "No Image"),
+      render: (image) => (image ? <img src={image} alt="Image category" style={{width: 70, height: 50}}/> : "No Image"),
     },
     {
       title: 'Action',
@@ -136,7 +140,7 @@ export default function Category() {
       render: (record) => (
         <div>
           <Button type='primary' onClick={() => handleEdit(record)}>Edit</Button>
-          <Button type='danger' onClick={() => handleDelete(record.id)}>Delete</Button>
+          <Button danger onClick={() => handleDelete(record.id)}>Delete</Button>
         </div>
       ),
     }
@@ -147,6 +151,7 @@ export default function Category() {
     id: item.id,
     categoryName: item.categoryName,
     description: item.description,
+    createdAt: item.createdAt,
     status: item.status,
     image: item.image,
   }));

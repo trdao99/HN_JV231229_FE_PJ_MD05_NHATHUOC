@@ -57,10 +57,10 @@ function Admin() {
           </NavLink>
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all duration-300 ease-in-out"
-            to="/admin/ct3"
+            to="/admin/product"
           >
             <ProductOutlined className="text-[20px]" />
-            {showFull ? "  this is link 3 title" : ""}
+            {showFull ? " Sản phẩm " : ""}
           </NavLink>
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400  "

@@ -1,9 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ADMIN_URL, BASE_URL } from "../api";
+import { BASE_URL } from "../api";
 import * as METHOD from "../constants/httpMethod";
-import { Cookies } from "react-cookie";
-import { json } from "react-router-dom";
-
+import {Cookies} from "react-cookie"
 export const findPhone = createAsyncThunk("auth/findPhone", async (phone) => {
   const response = await BASE_URL[METHOD.GET](
     `auth/phoneIsExist?phone=${phone}`
