@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import axios from "axios";
 import { ADMIN_URL } from "../api";
 import * as METHOD from "../constants/httpMethod";
 import { notification } from "antd";
@@ -10,6 +10,7 @@ export const getUser = createAsyncThunk("getuser", async ({ sort, page }) => {
   );
   return response.data;
 });
+
 export const block = createAsyncThunk("block", async (id) => {
   const response = await ADMIN_URL[METHOD.PUT](`lockUser?id=${id}`);
   return id;

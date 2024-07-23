@@ -7,20 +7,33 @@ const CategorySlice = createSlice({
     initialState: {
         loading: status.IDLE,
         data: [],
+        total: 0,
+        number: 0,
+        size: 2,
+        sortBy: "id",
+        sortDir : "asc",
         error: null,
     },
-    reducers: {},
+    reducers: {
+        changePage: (state,action) => {
+            state.number = action.payload.page;
+            state.size = action.payload.size;
+            state.sortBy = action.payload.sortBy;
+            state.sortDir = action.payload.sortDir;
+        } 
+    },
     extraReducers: (builder) => {
         //trạng thái chờ tải dữ liệu
-        builder.addCase(findAllCategory.pending, (state,action)=>{
+        builder.addCase(findAllCategory.pending, (state)=>{
             state.loading = status.PENDING;
         });
 
         //trang thai lay du lieu thanh cong
         builder.addCase(findAllCategory.fulfilled, (state,action)=>{
             state.loading = status.SUCCESS;
-            console.log(action.payload)
-            state.data = action.payload.data;
+            state.data = action.payload.data.content;
+            state.total = action.payload.data.totalElements;
+            console.log(action.payload);
         });
 
         //trang thai lay du lieu that bai
@@ -53,4 +66,5 @@ const CategorySlice = createSlice({
     },
 });
 
+export const { changePage } = CategorySlice.actions;
 export default CategorySlice.reducer;
