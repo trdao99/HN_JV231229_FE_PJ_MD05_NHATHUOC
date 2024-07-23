@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AuthModal from "../../../components/base/modal/AuthModal";
 import { Cookies } from "react-cookie";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   const [rotate, setRotate] = useState(false);
@@ -23,7 +24,10 @@ function Header() {
     localStorage.removeItem("userLogin");
     window.location.href = "/";
   };
-  const handleUserDetails = null;
+  const handleUserDetails = () => {
+    NavLink("/userdetail");
+  };
+
   return (
     <>
       <div className="top-0 hidden md:inline">
@@ -320,12 +324,13 @@ function Header() {
                           </button>
                           {isDropdownOpen && (
                             <div className="absolute top-9 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                              <button
+                              <NavLink
+                                to="/userdetail"
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 onClick={handleUserDetails}
                               >
                                 Thông tin cá nhân
-                              </button>
+                              </NavLink>
                               <button
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 onClick={null}

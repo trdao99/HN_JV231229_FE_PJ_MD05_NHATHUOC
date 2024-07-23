@@ -2,6 +2,7 @@ import {
   BarsOutlined,
   CommentOutlined,
   DashboardOutlined,
+  ExclamationCircleOutlined,
   ProductOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -15,7 +16,7 @@ function Admin() {
   const handleToggle = () => {
     setShowFull(!showFull);
   };
-
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   return (
     <>
       <div className="flex">
@@ -30,15 +31,16 @@ function Admin() {
             }`}
           >
             <img
-              src="https://th.bing.com/th/id/R.a88bb6c1cbeeafe541d381d6d15d23d1?rik=dCWPKFSkB0CWNA&pid=ImgRaw&r=0"
+              src={userLogin.avatar}
               alt="Admin Avatar"
               className="object-cover w-[70px] h-[70px] rounded-full"
             />
             {showFull && (
-              <span className="mx-2 text-white font-semibold">Admin 123</span>
+              <span className="mx-2 text-white font-semibold">
+                {userLogin.username}
+              </span>
             )}
           </div>
-
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all duration-300 ease-in-out"
             to="/admin/category"
@@ -51,7 +53,7 @@ function Admin() {
             to="/admin/ct2"
           >
             <CommentOutlined className="text-[20px]" />
-            {showFull ? " : this is link 2 title" : ""}
+            {showFull ? "  this is link 2 title" : ""}
           </NavLink>
           <NavLink
             className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all duration-300 ease-in-out"
@@ -65,13 +67,14 @@ function Admin() {
             to="/admin/user"
           >
             <UserOutlined className="text-[20px]" />
-            {showFull ? (
-              <span className="opacity-100 transition-all duration-500">
-                : User"
-              </span>
-            ) : (
-              <span className="opacity-0"></span>
-            )}
+            {showFull ? "  User" : ""}
+          </NavLink>
+          <NavLink
+            className="block h-12 hover:bg-slate-400 text-center leading-10 text-white focus:outline-none focus:ring-2 focus:ring-slate-400  "
+            to="/admin/banner"
+          >
+            <ExclamationCircleOutlined className="text-[20px]" />
+            {showFull ? "   Banner" : ""}
           </NavLink>
         </div>
         <div className="flex-1 p-4 bg-gray-300 h-[100vh] ">

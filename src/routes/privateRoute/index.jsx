@@ -4,6 +4,8 @@ import LayoutAdmin from "../../layouts/admin";
 import User from "../../page/adminPage/User";
 import Ct2 from "../../page/adminPage/Ct2";
 import Product from "../../page/adminPage/Product";
+import UserDetail from "../../layouts/user/userDetail/UserDetail";
+import Banner from "../../page/adminPage/Banner";
 
 const privateRoutes = [
   {
@@ -26,7 +28,15 @@ const privateRoutes = [
         path: "user",
         element: <User />,
       },
+      {
+        path: "banner",
+        element: <Banner />,
+      },
     ],
+  },
+  {
+    path: "/userdetail",
+    element: <PrivateRoute element={<UserDetail />} />,
   },
 ];
 

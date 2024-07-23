@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { findPhone, login, register } from "../../services/AuthService";
 import { Cookies } from "react-cookie";
+
 const AuthSlice = createSlice({
   name: "auth",
   initialState: {
@@ -29,7 +30,6 @@ const AuthSlice = createSlice({
       console.log(action.payload);
     });
     builder.addCase(login.rejected, (state, error) => {
-      state.loading = "success";
       state.error = error;
     });
     builder.addCase(login.pending, (state) => {
