@@ -22,14 +22,11 @@ function User() {
   };
 
   const handleChange = (value) => {
-    console.log(value);
     setSort(value);
-    // dispatch(getUser({ sort }));
   };
 
   const handleChangePagination = (page) => {
     setPage(page);
-    // dispatch(getUser({ page , sort}));
   };
   const handleSearch = (e) => {
     e.preventDefault();
@@ -102,70 +99,76 @@ function User() {
           </tr>
         </thead>
         <tbody>
-          {data.map((user) => (
-            <tr
-              key={user.id}
-              className="border-b hover:bg-gray-100 transition-colors duration-300"
-            >
-              <td className="px-4 py-2 text-center">{user.id}</td>
-              <td className="px-4 py-2 text-center">
-                {user.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt="User Avatar"
-                    className="max-w-[50px] mx-auto rounded-full"
-                  />
-                ) : (
-                  "N/A"
-                )}
-              </td>
-              <td className="px-4 py-2 text-center">
-                {user.createdAt ? moment(user.createdAt).format("LLLL") : "N/A"}
-              </td>
-              <td className="px-4 py-2 text-center">{user.email || "N/A"}</td>
-              <td className="px-4 py-2 text-center">
-                {user.isDeleted ? "Yes" : "No"}
-              </td>
-              <td className="px-4 py-2 text-center">{user.phone || "N/A"}</td>
-              <td className="px-4 py-2 text-center">{user.point || "N/A"}</td>
-              <td
-                className={`px-4 py-2 text-center ${
-                  user.status ? "text-blue-600" : "text-red-600"
-                }`}
+          {console.log(data)}
+          {data &&
+            data.map((user) => (
+              <tr
+                key={user.id}
+                className="border-b hover:bg-gray-100 transition-colors duration-300"
               >
-                {user.status ? "Active" : "Inactive"}
-              </td>
-              <td className="px-4 py-2 text-center">
-                {user.updatedAt ? moment(user.updatedAt).format("LLLL") : "N/A"}
-              </td>
-              <td className="px-4 py-2 text-center">
-                {user.username || "N/A"}
-              </td>
-              <td className="px-4 py-2 text-center">
-                <ul>
-                  {user.roles.map((role) => (
-                    <li key={role.id}>{role.name || "N/A"}</li>
-                  ))}
-                </ul>
-              </td>
-              <td className="px-4 py-2 text-center">
-                <button
-                  className={`px-2 py-1 m-2 rounded-md text-white ${
-                    user.status ? "bg-red-400" : "bg-green-400"
+                <td className="px-4 py-2 text-center">{user.id}</td>
+                <td className="px-4 py-2 text-center">
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt="User Avatar"
+                      className="max-w-[50px] mx-auto rounded-full"
+                    />
+                  ) : (
+                    "N/A"
+                  )}
+                </td>
+                <td className="px-4 py-2 text-center">
+                  {user.createdAt
+                    ? moment(user.createdAt).format("LLLL")
+                    : "N/A"}
+                </td>
+                <td className="px-4 py-2 text-center">{user.email || "N/A"}</td>
+                <td className="px-4 py-2 text-center">
+                  {user.isDeleted ? "Yes" : "No"}
+                </td>
+                <td className="px-4 py-2 text-center">{user.phone || "N/A"}</td>
+                <td className="px-4 py-2 text-center">{user.point || "N/A"}</td>
+                <td
+                  className={`px-4 py-2 text-center ${
+                    user.status ? "text-blue-600" : "text-red-600"
                   }`}
-                  onClick={() => handleBlockUnlock(user.id)}
                 >
-                  {user.status ? "Block" : "Unlock"}
-                </button>
-                <button
-                  className="px-2 py-1 m-2 rounded-md bg-red-400 text-white ml-2"
-                  onClick={() => handleDelete(user.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+                  {user.status ? "Active" : "Inactive"}
+                </td>
+                <td className="px-4 py-2 text-center">
+                  {user.updatedAt
+                    ? moment(user.updatedAt).format("LLLL")
+                    : "N/A"}
+                </td>
+                <td className="px-4 py-2 text-center">
+                  {user.username || "N/A"}
+                </td>
+                <td className="px-4 py-2 text-center">
+                  <ul>
+                    {user.roles.map((role) => (
+                      <li key={role.id}>{role.name || "N/A"}</li>
+                    ))}
+                  </ul>
+                </td>
+                <td className="px-4 py-2 text-center">
+                  <button
+                    className={`px-2 py-1 m-2 rounded-md text-white ${
+                      user.status ? "bg-red-400" : "bg-green-400"
+                    }`}
+                    onClick={() => handleBlockUnlock(user.id)}
+                  >
+                    {user.status ? "Block" : "Unlock"}
+                  </button>
+                  <button
+                    className="px-2 py-1 m-2 rounded-md bg-red-400 text-white ml-2"
+                    onClick={() => handleDelete(user.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <Pagination
