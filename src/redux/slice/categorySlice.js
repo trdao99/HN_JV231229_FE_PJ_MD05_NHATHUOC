@@ -9,7 +9,7 @@ const CategorySlice = createSlice({
         data: [],
         total: 0,
         number: 0,
-        size: 2,
+        size: 5,
         sortBy: "id",
         sortDir : "asc",
         error: null,
@@ -33,7 +33,6 @@ const CategorySlice = createSlice({
             state.loading = status.SUCCESS;
             state.data = action.payload.data.content;
             state.total = action.payload.data.totalElements;
-            console.log(action.payload);
         });
 
         //trang thai lay du lieu that bai

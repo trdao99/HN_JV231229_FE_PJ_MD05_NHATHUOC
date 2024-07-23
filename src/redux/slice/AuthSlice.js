@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { findPhone, login, register } from "../../services/AuthService";
 import { Cookies } from "react-cookie";
-const adminSlice = createSlice({
+const AuthSlice = createSlice({
   name: "auth",
   initialState: {
     loading: "idle",
@@ -17,7 +17,7 @@ const adminSlice = createSlice({
       state.loading = "success";
       state.data = action.payload;
     });
-    builder.addCase(register.payload, (state) => {
+    builder.addCase(register.pending, (state) => {
       state.loading = "pending";
     });
     builder.addCase(register.fulfilled, (state, action) => {
@@ -28,7 +28,7 @@ const adminSlice = createSlice({
       state.loading = "success";
       console.log(action.payload);
     });
-    builder.addCase(login.error, (state, error) => {
+    builder.addCase(login.rejected, (state, error) => {
       state.loading = "success";
       state.error = error;
     });
@@ -38,4 +38,4 @@ const adminSlice = createSlice({
   },
 });
 
-export default adminSlice.reducer;
+export default AuthSlice.reducer;
