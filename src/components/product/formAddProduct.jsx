@@ -47,35 +47,119 @@ const AddProductForm = ({ visible, onCancel }) => {
     try {
       const values = addForm.getFieldsValue();
       const formData = new FormData();
-      formData.append("productName", values.productName);
-      formData.append("description", values.description);
-      formData.append("status", values.status);
-      formData.append("createdAt", new Date());
-      formData.append("categoryId", values.categoryId);
-      formData.append("brandId", values.brandId);
-      if (file) {
-        formData.append("image", file);
-      };
-      if (detail) {
-        formData.append("productDetailImage", detail);
-      };
-      formData.append("productDetailName", values.productDetailName);
-      formData.append("productDetailStatus", values.productDetailStatus);
-      formData.append("productDetailStock", values.productDetailStock);
-      formData.append("productDetailUnitPrice", values.productDetailUnitPrice);
-      formData.append("unitName", values.unitName);
-      formData.append("unitPrice", values.unitPrice);
-      formData.append("unitStatus", values.unitStatus);
-    //   if (fileArray) {
-    fileArray.forEach(item => {
-        formData.append("imageSrc", item);
-    })
-        
-    //   }
 
-      dispatch(addProduct(formData)).then(() => {
-        dispatch(findAllProducts({ page: number, size, sortBy, sortDir }))
-         message.success("Product added successfully");
+    // Kiểm tra từng trường và thêm vào formData nếu hợp lệ
+    if (!values.productName) {
+        message.error("Vui lòng nhập tên sản phẩm");
+        return;
+    } else {
+        formData.append("productName", values.productName);
+    }
+
+    if (!values.description) {
+        message.error("Vui lòng nhập mô tả sản phẩm");
+        return;
+    } else {
+        formData.append("description", values.description);
+    }
+
+    if (!values.status) {
+        message.error("Vui lòng chọn trạng thái");
+        return;
+    } else {
+        formData.append("status", values.status);
+    }
+
+    if (!values.categoryId) {
+        message.error("Vui lòng chọn danh mục");
+        return;
+    } else {
+        formData.append("categoryId", values.categoryId);
+    }
+
+    if (!values.brandId) {
+        message.error("Vui lòng chọn thương hiệu");
+        return;
+    } else {
+        formData.append("brandId", values.brandId);
+    }
+
+    if (!file) {
+        message.error("Vui lòng chọn hình ảnh sản phẩm");
+        return;
+    } else {
+        formData.append("image", file);
+    }
+
+    if (!detail) {
+        message.error("Vui lòng chọn hình ảnh chi tiết sản phẩm");
+        return;
+    } else {
+        formData.append("productDetailImage", detail);
+    }
+
+    if (!values.productDetailName) {
+        message.error("Vui lòng nhập tên chi tiết sản phẩm");
+        return;
+    } else {
+        formData.append("productDetailName", values.productDetailName);
+    }
+
+    if (!values.productDetailStatus) {
+        message.error("Vui lòng chọn trạng thái chi tiết sản phẩm");
+        return;
+    } else {
+        formData.append("productDetailStatus", values.productDetailStatus);
+    }
+
+    if (!values.productDetailStock) {
+        message.error("Vui lòng nhập số lượng chi tiết sản phẩm");
+        return;
+    } else {
+        formData.append("productDetailStock", values.productDetailStock);
+    }
+
+    if (!values.productDetailUnitPrice) {
+        message.error("Vui lòng nhập giá chi tiết sản phẩm");
+        return;
+    } else {
+        formData.append("productDetailUnitPrice", values.productDetailUnitPrice);
+    }
+
+    if (!values.unitName) {
+        message.error("Vui lòng nhập tên đơn vị");
+        return;
+    } else {
+        formData.append("unitName", values.unitName);
+    }
+
+    if (!values.unitPrice) {
+        message.error("Vui lòng nhập giá đơn vị");
+        return;
+    } else {
+        formData.append("unitPrice", values.unitPrice);
+    }
+
+    if (!values.unitStatus) {
+        message.error("Vui lòng chọn trạng thái đơn vị");
+        return;
+    } else {
+        formData.append("unitStatus", values.unitStatus);
+    }
+
+    if(!fileArray){
+        message.error("Vui lòng chọn chuỗi hình ảnh");
+        return;
+    }else {
+        fileArray.forEach(item => {
+          formData.append("imageSrc", item);
+        })
+    }
+
+    formData.append("createdAt", new Date());
+
+    dispatch(addProduct(formData)).then(() => {
+      dispatch(findAllProducts({ page: number, size, sortBy, sortDir }))
       onCancel();
       setFile(null);
       setDetail(null);
@@ -115,14 +199,13 @@ const AddProductForm = ({ visible, onCancel }) => {
       layout='vertical'
       scrollToFirstError
     >
-        {console.log(fileArray)}
       <Form.Item
         name="productName"
         label="Tên sản phẩm"
         rules={[
           {
             required: true,
-            message: 'Vui lòng nhập tên sản phẩm!',
+            message: 'Vui lòng nhập tên sản phẩm!'
           }
         ]}
       >
@@ -134,7 +217,7 @@ const AddProductForm = ({ visible, onCancel }) => {
         rules={[
           {
             required: true,
-            message: 'Vui lòng nhập mô tả!',
+            message: 'Vui lòng nhập mô tả!'
           }
         ]}
       >
@@ -146,7 +229,7 @@ const AddProductForm = ({ visible, onCancel }) => {
         rules={[
           {
             required: true,
-            message: 'Vui lòng chọn trạng thái!',
+            message: 'Vui lòng chọn trạng thái!'
           }
         ]}
       >
@@ -161,7 +244,7 @@ const AddProductForm = ({ visible, onCancel }) => {
         rules={[
           {
             required: true,
-            message: 'Vui lòng chọn danh mục!',
+            message: 'Vui lòng chọn danh mục!'
           }
         ]}
       >
@@ -177,7 +260,7 @@ const AddProductForm = ({ visible, onCancel }) => {
         rules={[
           {
             required: true,
-            message: 'Vui lòng chọn brand!',
+            message: 'Vui lòng chọn brand!'
           }
         ]}
       >

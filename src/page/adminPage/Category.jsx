@@ -50,11 +50,29 @@ export default function Category() {
     try {
       const values = form.getFieldsValue();
       const formData = new FormData();
-      formData.append("categoryName", values.categoryName);
-      formData.append("description", values.description);
-      formData.append("status", values.status);
+      if(values.categoryName){
+        formData.append("categoryName", values.categoryName);
+      }else{
+        message.error("Vui lòng nhập tên danh mục")
+        return;
+      }
+      if(values.description){
+        formData.append("description", values.description);
+      }else{
+        message.error("Vui lòng nhập mô tả")
+        return;
+      }
+      if(values.status){
+        formData.append("status", values.status);
+      }else{
+        message.error("Vui lòng chọn trạng thái")
+        return;
+      }
       if (file) {
         formData.append("image", file);
+      }else{
+        message.error("Vui lòng chọn hình ảnh")
+        return;
       }
 
       dispatch(updateCategory({formData, id: editCategory.id})).then(() => dispatch(findAllCategory({page: number, size , sortBy, sortDir})));
