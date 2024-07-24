@@ -20,7 +20,7 @@ const CategorySlice = createSlice({
             state.size = action.payload.size;
             state.sortBy = action.payload.sortBy;
             state.sortDir = action.payload.sortDir;
-        } 
+        }
     },
     extraReducers: (builder) => {
         //trạng thái chờ tải dữ liệu
