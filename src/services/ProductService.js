@@ -45,3 +45,15 @@ export const updateProduct = createAsyncThunk(
         }
     }
 );
+
+export const changeStatusProduct = createAsyncThunk(
+    "product/changeStatusProduct",
+    async (productId) => {
+        const response = await BASE_URL[PUT](`admin/productStatus/${productId}`,{
+            headers:{
+                'Content-Type': "application/json"
+            }
+        });
+        return response.data;
+    }
+);

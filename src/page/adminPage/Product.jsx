@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, Spin, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { findAllProducts } from '../../services/ProductService';
+import { changeStatusProduct, findAllProducts } from '../../services/ProductService';
 import PaginationComponent from '../../components/base/page/PaginationComponent';
 import { changePage } from '../../redux/slice/ProductSlice';
 import axios from 'axios';
@@ -65,8 +65,10 @@ export default function Product() {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
-    dispatch(findAllProducts({ page: number, size, sortBy, sortDir }));
+    console.log(id);
+    dispatch(changeStatusProduct(id)).then(() => {
+      dispatch(findAllProducts({ page: number, size, sortBy, sortDir }));
+    });
   };
 
   const handleDetail = (id) => {
@@ -139,7 +141,7 @@ export default function Product() {
         <div>
           {/* <Button onClick={() => handleDetail(record.id)}> Chi tiết </Button> */}
           <Button type="primary" onClick={() => handleEdit(record)}>Sửa</Button>
-          <Button danger onClick={() => handleDelete(record.id)}>Xóa</Button>
+          <Button danger onClick={() => handleDelete(record.id)}>Đổi trạng thái</Button>
         </div>
       )
     }

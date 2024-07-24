@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../constants/status"
-import { addProduct, findAllProducts } from "../../services/ProductService";
+import { addProduct, changeStatusProduct, findAllProducts, updateProduct } from "../../services/ProductService";
 
 const ProductSlice = createSlice({
     name: "product",
@@ -49,7 +49,46 @@ const ProductSlice = createSlice({
         builder.addCase(addProduct.rejected, (state, action) => {
             state.error = action.error.message;
         });
-        
+
+        //update product
+        builder.addCase(updateProduct.pending, (state, action) => {
+            state.loading = status.PENDING;
+        });
+        //update product thanh cong
+        builder.addCase(updateProduct.fulfilled, (state, action) => {
+            const indexUpdate = state.data.findIndex(
+                (item) => item.id === action.payload.id
+            );
+            if (indexUpdate !== -1) {
+                state.data[indexUpdate] = action.payload;
+            }
+        });
+        //bat loi update product
+        builder.addCase(updateProduct.rejected, (state, action) => {
+            state.loading = status.FAILED;
+            state.error = action.error.message;
+        });
+
+        //update product status
+        builder.addCase(changeStatusProduct.pending, (state, action) => {
+            state.loading = status.PENDING;
+        });
+        //update product status thanh cong
+        builder.addCase(changeStatusProduct.fulfilled, (state, action) => {
+            state.loading = status.SUCCESS;
+            const indexUpdate = state.data.findIndex(
+                (item) => item.id === action.payload.id
+            );
+            if (indexUpdate!== -1) {
+                state.data[indexUpdate] = {...state.data[indexUpdate], status: action.payload.status };
+            }
+        });
+        //bat loi update product status
+        builder.addCase(changeStatusProduct.rejected, (state, action) => {
+            state.loading = status.FAILED;
+            state.error = action.error.message;
+        });
+
     },    
 });
 
