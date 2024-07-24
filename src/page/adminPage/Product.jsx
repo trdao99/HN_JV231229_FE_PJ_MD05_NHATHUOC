@@ -6,6 +6,7 @@ import PaginationComponent from '../../components/base/page/PaginationComponent'
 import { changePage } from '../../redux/slice/ProductSlice';
 import axios from 'axios';
 import AddProductForm from '../../components/product/formAddProduct';
+import UpdateProductForm from '../../components/product/formUpdateProduct';
 
 export default function Product() {
   const product = useSelector((state) => state.product.data);
@@ -73,10 +74,6 @@ export default function Product() {
     setDetailModalVisible(true);
   };
 
-  const handleModalOk = async () => {
-    console.log("ok");
-  };
-
   const handleModalCancel = async () => {
     setModalVisible(false);
     form.resetFields();
@@ -140,7 +137,7 @@ export default function Product() {
       key: 'option',
       render: (record) => (
         <div>
-          <Button onClick={() => handleDetail(record.id)}> Chi tiết </Button>
+          {/* <Button onClick={() => handleDetail(record.id)}> Chi tiết </Button> */}
           <Button type="primary" onClick={() => handleEdit(record)}>Sửa</Button>
           <Button danger onClick={() => handleDelete(record.id)}>Xóa</Button>
         </div>
@@ -185,27 +182,10 @@ export default function Product() {
       <Modal
         title="Chỉnh sửa sản phẩm"
         visible={modalVisible}
-        onOk={handleModalOk}
         onCancel={handleModalCancel}
+        footer={null}
       >
-        <Form
-          form={form}
-          layout='vertical'
-          scrollToFirstError
-        >
-          <Form.Item
-            name="productName"
-            label="Tên sản phẩm"
-            rules={[
-              {
-                required: true,
-                message: 'Vui lòng nhập tên sản phẩm!',
-              }
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
+        <UpdateProductForm visible={modalVisible} onCancel={() => setModalVisible(false)} editProduct={editProduct}/>
       </Modal>
 
       <Modal

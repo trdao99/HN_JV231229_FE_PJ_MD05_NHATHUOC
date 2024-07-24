@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../constants/status"
-import { addCategory, deleteCategory, findAllCategory } from "../../services/categoryService";
+import { addCategory, deleteCategory, findAllCategory, updateCategory } from "../../services/categoryService";
 
 const CategorySlice = createSlice({
     name: "category",
@@ -48,6 +48,22 @@ const CategorySlice = createSlice({
 
         //bat loi them moi category
         builder.addCase(addCategory.rejected, (state, action) => {
+            state.error = action.error.message;
+        });
+
+        //update category
+        builder.addCase(updateCategory.pending, (state, action) => {
+            state.loading = status.PENDING;
+        });
+        builder.addCase(updateCategory.fulfilled, (state, action) => {
+            state.loading = status.SUCCESS;
+            const index = state.data.findIndex(item => item.id === action.payload.data.content.id);
+            if(index!== -1){
+                state.data[index] = {...state.data[index],...action.payload.data.content};
+            }
+        });
+        builder.addCase(updateCategory.rejected, (state, action) => {
+            state.loading = status.FAILED;
             state.error = action.error.message;
         });
 

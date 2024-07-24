@@ -34,7 +34,6 @@ const ProductSlice = createSlice({
             state.data = action.payload.data.content;
             state.total = action.payload.data.totalElements;
         });
-
         //Trạng thái tải dữ liệu thất bại
         builder.addCase(findAllProducts.rejected, (state, action) => {
             state.loading = status.FAILED;
