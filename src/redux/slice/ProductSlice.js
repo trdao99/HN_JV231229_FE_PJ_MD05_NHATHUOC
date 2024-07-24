@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../constants/status"
-import { findAllProducts } from "../../services/ProductService";
+import { addProduct, findAllProducts } from "../../services/ProductService";
 
 const ProductSlice = createSlice({
     name: "product",
@@ -9,7 +9,7 @@ const ProductSlice = createSlice({
         data: [],
         total: 0,
         number: 0,
-        size: 2,
+        size: 5,
         sortBy: "id",
         sortDir: "asc",
         error: null,
@@ -40,6 +40,17 @@ const ProductSlice = createSlice({
             state.loading = status.FAILED;
             state.error = action.error.message;
         });
+
+        //Thêm mới product
+        builder.addCase(addProduct.fulfilled, (state, action) => {
+            state.data.push(action.payload);
+        });
+
+        //Bat loi them moi product
+        builder.addCase(addProduct.rejected, (state, action) => {
+            state.error = action.error.message;
+        });
+        
     },    
 });
 

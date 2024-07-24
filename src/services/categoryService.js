@@ -10,6 +10,22 @@ export const findAllCategory = createAsyncThunk(
     }
 );
 
+export const findCategoryById = createAsyncThunk(
+    "category/findCategoryById",
+    async (categoryId) => {
+        const response = await BASE_URL[GET](`admin/category/${categoryId}`);
+        return response.data;
+    }
+);
+
+export const allCategory = createAsyncThunk(
+    "category/getAllCategory",
+    async () => {
+        const response = await BASE_URL[GET](`admin/categories`);
+        return response.data;
+    }
+);
+
 export const addCategory = createAsyncThunk(
     "category/addCategory",
     async (category) => {
