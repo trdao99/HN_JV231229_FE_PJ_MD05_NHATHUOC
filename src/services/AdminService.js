@@ -43,3 +43,33 @@ export const searchUser = createAsyncThunk("search", async (name) => {
     return { content: [] };
   }
 });
+export const uploadBanner = createAsyncThunk(
+  "uploadBanner",
+  async (formData) => {
+    const response = await ADMIN_URL[METHOD.POST](`banner`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  }
+);
+export const getBanners = createAsyncThunk("getBanners", async () => {
+  const response = await ADMIN_URL[METHOD.GET](`banner`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+});
+export const setBanners = createAsyncThunk("setBanners", async (id) => {
+  const response = await ADMIN_URL[METHOD.PUT](`banner`, id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+});
