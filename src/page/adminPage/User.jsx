@@ -14,7 +14,7 @@ function User() {
   const [sort, setSort] = useState("id");
   const [page, setPage] = useState(0);
   useEffect(() => {
-    dispatch(getUser({ sort, page: page - 1 }));
+    dispatch(getUser({ sort, page }));
   }, [dispatch, sort, page]);
 
   const handleBlockUnlock = (id) => {
