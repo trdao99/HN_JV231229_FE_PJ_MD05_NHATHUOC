@@ -57,3 +57,19 @@ export const changeStatusProduct = createAsyncThunk(
         return response.data;
     }
 );
+
+export const searchProduct = createAsyncThunk(
+    "product/searchProduct",
+    async ({ searchPro, page, size, sortBy, sortDir}) => {
+        const response = await BASE_URL[GET](`admin/searchProduct?searchPro=${searchPro}&page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`);
+        return response.data;
+    }
+);
+
+export const findProductsByCategory = createAsyncThunk(
+    "product/findProductsByCategory",
+    async ({ categoryId, page, size, sortBy, sortDir}) => {
+        const response = await BASE_URL[GET](`admin/list-product-by-category/${categoryId}?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`);
+        return response.data;
+    }
+);

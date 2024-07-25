@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Spin, Table } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Form, Input, Modal, Select, Spin, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeStatusProduct, findAllProducts } from '../../services/ProductService';
+import { changeStatusProduct, findAllProducts, findProductsByCategory, searchProduct } from '../../services/ProductService';
 import PaginationComponent from '../../components/base/page/PaginationComponent';
 import { changePage } from '../../redux/slice/ProductSlice';
 import axios from 'axios';
 import AddProductForm from '../../components/product/formAddProduct';
 import UpdateProductForm from '../../components/product/formUpdateProduct';
+import { SearchOutlined } from '@ant-design/icons';
+import { useDebounce } from 'rooks';
 
 export default function Product() {
   const product = useSelector((state) => state.product.data);
@@ -15,15 +17,21 @@ export default function Product() {
   const size = useSelector((state) => state.product.size);
   const sortBy = useSelector((state) => state.product.sortBy);
   const sortDir = useSelector((state) => state.product.sortDir);
+  const searchPro = useSelector((state) => state.product.searchPro);
   const isLoading = useSelector((state) => state.product.loading === "pending");
+
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [searchText, setSearchText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const setValueDebounced = useDebounce(setSearchText, 1000);
 
   const handleChangePage = (page, pageSize) => {
     dispatch(changePage({ page: page - 1, size: pageSize, sortBy: sortBy, sortDir: sortDir }));
@@ -31,8 +39,14 @@ export default function Product() {
   };
 
   useEffect(() => {
-    dispatch(findAllProducts({ page: number, size, sortBy, sortDir }));
-  }, [number, size, sortBy, sortDir, dispatch]);
+    if(searchText){
+      dispatch(searchProduct({ searchPro: searchText, page: number, size, sortBy, sortDir }));
+    }else if(selectedCategory){
+      dispatch(findProductsByCategory({categoryId: selectedCategory, page: number, size, sortBy, sortDir}))
+    }else{
+      dispatch(findAllProducts({ page: number, size, sortBy, sortDir }));
+    }
+  }, [number, size, sortBy, sortDir, dispatch,searchText,selectedCategory]);
 
   useEffect(() => {
     const findCategoriesAndBrands = async () => {
@@ -80,6 +94,15 @@ export default function Product() {
     setModalVisible(false);
     form.resetFields();
   };
+
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    if (value){
+      dispatch(findProductsByCategory({categoryId : selectedCategory, page, size, sortBy, sortDir}))
+    }else{
+      dispatch(findAllProducts({ page, size, sortBy, sortDir }));
+    }
+  }
 
   const columns = [
     {
@@ -147,19 +170,24 @@ export default function Product() {
     }
   ];
 
-  const data = product?.map((item) => ({
-    key: item.id,
-    id: item.id,
-    productName: item.productName,
-    description: item.description,
-    status: item.status,
-    createdAt: item.createdAt,
-    updatedAt: item.updatedAt,
-    sku: item.sku,
-    brand: brands.find((brand) => brand.brandId === item.brandId)?.brandName || "N/A",
-    category: categories.find((category) => category.categoryId === item.categoryId)?.categoryName || "N/A",
-    image: item.image,
-  }));
+  const data = product?.map((item) => {
+    const brand = brands.find((brand) => brand.id === item.brand.id);
+    const category = categories.find((category) => category.id === item.category.id);
+
+    return {
+      key: item.id,
+      id: item.id,
+      productName: item.productName,
+      description: item.description,
+      status: item.status,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      sku: item.sku,
+      brand: brand ? brand.brandName : "N/A", 
+      category: category ? category.categoryName : "N/A",
+      image: item.image,
+    };
+  });
 
   return (
     <>
@@ -168,6 +196,26 @@ export default function Product() {
           <Spin />
         ) : (
           <div>
+            <Input 
+              placeholder='Tìm kiếm sản phẩm'
+              onChange={(e)=>setValueDebounced(e.target.value)}
+              prefix={<SearchOutlined />}
+              style={{width: 200, marginRight: 10}}
+            ></Input>
+            <Button type='primary' onClick={() => setSearchText("")} style={{marginRight:10}}>Làm mới tìm kiếm</Button>
+            <Select
+            placeholder="Filter by Category"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            style={{ width: 200, marginBottom: 16 }}
+          >
+            <Option value={null}>All Categories</Option>
+            {categories.map((category) => (
+              <Option key={category.id}>
+                {category.categoryName}
+              </Option>
+            ))}
+          </Select>
             <Button type='primary' onClick={() => setAddModalVisible(true)} style={{ marginBottom: 16 }}>
               Thêm mới Sản phẩm
             </Button>
