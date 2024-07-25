@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AuthModal from "../../../components/base/modal/AuthModal";
 import { Cookies } from "react-cookie";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 
 function Header() {
   const [rotate, setRotate] = useState(false);
@@ -349,6 +349,12 @@ function Header() {
                               >
                                 Địa chỉ nhận hàng
                               </button>
+                              <NavLink
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                to="/wishList"
+                              >
+                                Sản phẩm yêu thích
+                              </NavLink>
                               <hr></hr>
                               <button
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../footer/Footer";
-import Header from "../header/Header";
+import Footer from "../../../layouts/user/footer/Footer";
+import Header from "../../../layouts/user/header/Header";
 import SideBarUser from "./SideBarUser";
 import {
   ArrowRightOutlined,
@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../../services/Userservice";
 import { Alert, notification, Spin } from "antd";
+import { NavLink } from "react-router-dom";
 
 function UserDetail() {
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
@@ -134,7 +135,7 @@ function UserDetail() {
               <span className="text-sm">{userLogin.phone}</span>
               <p className="text-sm font-medium">Mật khẩu </p>
               <span className="text-sm">
-                <a className=" text-blue-500">
+                <a className=" text-blue-500" href="/changePass">
                   Cập nhật <ArrowRightOutlined />
                 </a>
               </span>

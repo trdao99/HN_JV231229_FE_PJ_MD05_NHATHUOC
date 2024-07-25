@@ -1,3 +1,4 @@
+import { HeartOutlined } from "@ant-design/icons";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -223,7 +224,6 @@ function SideBarUser({ userLogin }) {
                 </span>
               </NavLink>
             </li>
-
             <li>
               <NavLink
                 className="group flex items-center px-4 py-3 font-semibold   dark:text-white dark:hover:bg-neutral-500"
@@ -342,6 +342,19 @@ function SideBarUser({ userLogin }) {
                 </span>
                 <span className="ml-3 text-base text-black">Mã giảm giá</span>
               </a>
+            </li>
+            <li>
+              <NavLink
+                className="mb-2 group flex items-center px-4 py-3 font-semibold   dark:text-white dark:hover:bg-neutral-500"
+                to="/wishList"
+              >
+                <span className="p-icon inline-flex align-[-0.125em] justify-center max-h-full max-w-full w-6 h-6">
+                  <HeartOutlined className="text-black font-bold text-2xl" />
+                </span>
+                <span className="ml-3 text-base text-black">
+                  Sản phẩm yêu thích
+                </span>
+              </NavLink>
             </li>
           </ul>
         </div>

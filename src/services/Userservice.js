@@ -16,3 +16,19 @@ export const updateUser = createAsyncThunk(
     return response.data;
   }
 );
+export const changePassword = createAsyncThunk(
+  "user/changePass",
+  async (partparams) => {
+    const { phone, oldPassword, newPassword } = partparams;
+    const response = await BASE_URL[METHOD.PUT](
+      `user/changePassword?oldPassword=${oldPassword}&newPassword=${newPassword}&phone=${phone}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  }
+);
