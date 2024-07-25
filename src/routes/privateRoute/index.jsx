@@ -3,7 +3,10 @@ import Category from "../../page/adminPage/Category";
 import LayoutAdmin from "../../layouts/admin";
 import User from "../../page/adminPage/User";
 import Ct2 from "../../page/adminPage/Ct2";
-import Ct3 from "../../page/adminPage/Ct3";
+
+import Product from "../../page/adminPage/Product";
+import UserDetail from "../../layouts/user/userDetail/UserDetail";
+
 import Banner from "../../page/adminPage/Banner";
 import UserDetail from "../../page/user/userDetail/UserDetail";
 import ChangePassword from "../../page/user/userDetail/ChangePassword";
@@ -23,8 +26,8 @@ const privateRoutes = [
         element: <Ct2 />,
       },
       {
-        path: "ct3",
-        element: <Ct3 />,
+        path: "product",
+        element: <Product />,
       },
       {
         path: "user",

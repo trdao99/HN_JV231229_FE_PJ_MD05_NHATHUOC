@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { findPhone, login, register } from "../../services/AuthService";
+import { Cookies } from "react-cookie";
+
 const AuthSlice = createSlice({
   name: "auth",
   initialState: {

@@ -32,7 +32,6 @@ export default function Category() {
 
   const dispatch = useDispatch();
   const [editCategory, setEditCategory] = useState(null);
-  console.log(editCategory);
   const [modalVisible, setModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [file, setFile] = useState(null);
@@ -80,11 +79,29 @@ export default function Category() {
     try {
       const values = form.getFieldsValue();
       const formData = new FormData();
-      formData.append("categoryName", values.categoryName);
-      formData.append("description", values.description);
-      formData.append("status", values.status);
+      if(values.categoryName){
+        formData.append("categoryName", values.categoryName);
+      }else{
+        message.error("Vui lòng nhập tên danh mục")
+        return;
+      }
+      if(values.description){
+        formData.append("description", values.description);
+      }else{
+        message.error("Vui lòng nhập mô tả")
+        return;
+      }
+      if(values.status){
+        formData.append("status", values.status);
+      }else{
+        message.error("Vui lòng chọn trạng thái")
+        return;
+      }
       if (file) {
         formData.append("image", file);
+      }else{
+        message.error("Vui lòng chọn hình ảnh")
+        return;
       }
 
       dispatch(updateCategory({ formData, id: editCategory.id })).then(() =>
@@ -151,37 +168,33 @@ export default function Category() {
       key: "description",
     },
     {
-      title: "Trạng Thái",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => (status ? "Hoạt động" : "Không hoạt động"),
+
+      title: 'Ngày tạo',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
     },
     {
-      title: "Hình ảnh",
-      dataIndex: "image",
-      key: "image",
-      render: (image) =>
-        image ? (
-          <img
-            src={image}
-            alt="Image category"
-            style={{ width: 50, height: 50 }}
-          />
-        ) : (
-          "No Image"
-        ),
+      title: 'Trạng Thái',
+      dataIndex:'status',
+      key:'status',
+      render: status => status? "Hoạt động" : "Không hoạt động",
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'image',
+      key: 'image',
+      render: (image) => (image ? <img src={image} alt="Image category" style={{width: 70, height: 50}}/> : "No Image"),
+
     },
     {
       title: "Action",
       key: "action",
       render: (record) => (
         <div>
-          <Button type="primary" onClick={() => handleEdit(record)}>
-            Edit
-          </Button>
-          <Button type="danger" onClick={() => handleDelete(record.id)}>
-            Delete
-          </Button>
+
+          <Button type='primary' onClick={() => handleEdit(record)}>Edit</Button>
+          <Button danger onClick={() => handleDelete(record.id)}>Delete</Button>
+
         </div>
       ),
     },
@@ -192,6 +205,7 @@ export default function Category() {
     id: item.id,
     categoryName: item.categoryName,
     description: item.description,
+    createdAt: item.createdAt,
     status: item.status,
     image: item.image,
   }));
