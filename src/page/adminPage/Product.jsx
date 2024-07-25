@@ -9,6 +9,8 @@ import AddProductForm from '../../components/product/formAddProduct';
 import UpdateProductForm from '../../components/product/formUpdateProduct';
 import { SearchOutlined } from '@ant-design/icons';
 import { useDebounce } from 'rooks';
+import { findProductDetailbyProduct } from '../../services/ProductDetailService';
+import { useNavigate } from 'react-router-dom';
 
 export default function Product() {
   const product = useSelector((state) => state.product.data);
@@ -32,6 +34,12 @@ export default function Product() {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const setValueDebounced = useDebounce(setSearchText, 1000);
+
+  const navigate = useNavigate();
+
+    const handleDetailClick = (id) => {
+        navigate(`/admin/product-detail/${id}`);
+    };
 
   const handleChangePage = (page, pageSize) => {
     dispatch(changePage({ page: page - 1, size: pageSize, sortBy: sortBy, sortDir: sortDir }));
@@ -86,7 +94,7 @@ export default function Product() {
   };
 
   const handleDetail = (id) => {
-    dispatch(findProductDetailByProductId(id));
+    dispatch(findProductDetailbyProduct(id));
     setDetailModalVisible(true);
   };
 
@@ -162,7 +170,9 @@ export default function Product() {
       key: 'option',
       render: (record) => (
         <div>
-          {/* <Button onClick={() => handleDetail(record.id)}> Chi tiết </Button> */}
+          <Button type="primary" onClick={() => handleDetailClick(record.id)}>
+            Xem chi tiết
+          </Button>          
           <Button type="primary" onClick={() => handleEdit(record)}>Sửa</Button>
           <Button danger onClick={() => handleDelete(record.id)}>Đổi trạng thái</Button>
         </div>

@@ -4,6 +4,7 @@ import ProductSlice from "./ProductSlice";
 import AdminSlice from "./AdminSlice";
 import AuthSlice from "./AuthSlice";
 import userSilce from "./userSilce";
+import ProductDetailSlice from "./ProductDetailSlice";
 
 const rootReducers = combineReducers({
   category: categorySlice,
@@ -11,6 +12,7 @@ const rootReducers = combineReducers({
   auth: AuthSlice,
   user: userSilce,
   product: ProductSlice,
+  productDetail : ProductDetailSlice
 });
 
 export default rootReducers;

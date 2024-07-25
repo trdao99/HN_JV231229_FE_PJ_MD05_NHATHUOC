@@ -6,6 +6,7 @@ import Ct2 from "../../page/adminPage/Ct2";
 import Product from "../../page/adminPage/Product";
 import UserDetail from "../../layouts/user/userDetail/UserDetail";
 import Banner from "../../page/adminPage/Banner";
+import ProductDetail from "../../page/adminPage/ProductDetail";
 
 const privateRoutes = [
   {
@@ -32,6 +33,10 @@ const privateRoutes = [
         path: "banner",
         element: <Banner />,
       },
+      {
+        path: "product-detail/:id",
+        element: <ProductDetail />,
+      }
     ],
   },
   {
