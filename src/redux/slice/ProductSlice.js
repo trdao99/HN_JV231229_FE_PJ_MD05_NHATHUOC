@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../constants/status"
-import { addProduct, changeStatusProduct, findAllProducts, updateProduct } from "../../services/ProductService";
+import { addProduct, changeStatusProduct, findAllProducts, findProductsByCategory, searchProduct, updateProduct } from "../../services/ProductService";
 
 const ProductSlice = createSlice({
     name: "product",
     initialState: {
         loading: status.IDLE,
         data: [],
+        searchPro:"",
         total: 0,
         number: 0,
         size: 5,
@@ -16,6 +17,7 @@ const ProductSlice = createSlice({
     },
     reducers: {
         changePage: (state, action) => {
+            state.searchPro= action.payload.searchPro;
             state.number = action.payload.page;
             state.size = action.payload.size;
             state.sortBy = action.payload.sortBy;
@@ -39,6 +41,23 @@ const ProductSlice = createSlice({
             state.loading = status.FAILED;
             state.error = action.error.message;
         });
+
+        //Tìm kiếm product
+        builder.addCase(searchProduct.pending, (state)=>{
+            state.loading = status.PENDING;
+        });
+        //Trạng thái tải dữ liệu tìm kiếm thành công
+        builder.addCase(searchProduct.fulfilled, (state, action) => {
+            state.loading = status.SUCCESS;
+            state.data = action.payload.data.content;
+            state.total = action.payload.data.totalElements;
+        });
+        //Trạng thái tải dữ liệu tìm kiếm thất bại
+        builder.addCase(searchProduct.rejected, (state, action) => {
+            state.loading = status.FAILED;
+            state.error = action.error.message;
+        });
+
 
         //Thêm mới product
         builder.addCase(addProduct.fulfilled, (state, action) => {
@@ -85,6 +104,19 @@ const ProductSlice = createSlice({
         });
         //bat loi update product status
         builder.addCase(changeStatusProduct.rejected, (state, action) => {
+            state.loading = status.FAILED;
+            state.error = action.error.message;
+        });
+
+        builder.addCase(findProductsByCategory.pending, (state, action) => {
+            state.loading = status.PENDING;
+        });
+        builder.addCase(findProductsByCategory.fulfilled, (state, action) => {
+            state.loading = status.SUCCESS;
+            state.data = action.payload.data.content;
+            state.total = action.payload.data.totalElements;
+        });
+        builder.addCase(findProductsByCategory.rejected, (state, action) => {
             state.loading = status.FAILED;
             state.error = action.error.message;
         });
