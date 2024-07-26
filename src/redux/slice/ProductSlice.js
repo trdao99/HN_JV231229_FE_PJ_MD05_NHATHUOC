@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../constants/status"
-import { addProduct, changeStatusProduct, findAllProducts, findProductsByCategory, searchProduct, updateProduct } from "../../services/ProductService";
+import { addProduct, changeStatusProduct, findAllProducts, findProductsByCategory, homePageProducts, homePageProductsbyCategory, searchProduct, updateProduct } from "../../services/ProductService";
 
 const ProductSlice = createSlice({
     name: "product",
@@ -10,7 +10,7 @@ const ProductSlice = createSlice({
         searchPro:"",
         total: 0,
         number: 0,
-        size: 5,
+        size: 6,
         sortBy: "id",
         sortDir: "asc",
         error: null,
@@ -121,6 +121,33 @@ const ProductSlice = createSlice({
             state.error = action.error.message;
         });
 
+        //phan trang product
+        builder.addCase(homePageProducts.pending, (state, action) => {
+            state.loading = status.PENDING;
+        });
+        builder.addCase(homePageProducts.fulfilled, (state, action) =>{
+            state.loading = status.SUCCESS;
+            state.data = action.payload.data.content;
+            state.total = action.payload.data.totalElements;
+        });
+        builder.addCase(homePageProducts.rejected, (state, action) => {
+            state.loading = status.FAILED;
+            state.error = action.error.message;
+        });
+
+        //phan trang product theo category
+        builder.addCase(homePageProductsbyCategory.pending, (state, action) => {
+            state.loading = status.PENDING;
+        });
+        builder.addCase(homePageProductsbyCategory.fulfilled, (state, action) =>{
+            state.loading = status.SUCCESS;
+            state.data = action.payload.data.content;
+            state.total = action.payload.data.totalElements;
+        });
+        builder.addCase(homePageProductsbyCategory.rejected, (state, action) => {
+            state.loading = status.FAILED;
+            state.error = action.error.message;
+        });
     },    
 });
 

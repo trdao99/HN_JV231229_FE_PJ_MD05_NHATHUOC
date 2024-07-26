@@ -73,3 +73,23 @@ export const findProductsByCategory = createAsyncThunk(
         return response.data;
     }
 );
+
+export const homePageProducts = createAsyncThunk(
+    "product/homePageProducts",
+    async ({searchPro , page, size, sort, direction}) => {
+        const response = await BASE_URL[GET](
+            `products/list-product?searchPro=${searchPro}&page=${page}&size=${size}&sort=${sort}&direction=${direction}`
+        );
+        return response.data;
+    }
+);
+
+export const homePageProductsbyCategory = createAsyncThunk(
+    "product/homePageProductsbyCategory",
+    async ({categoryId, page, size, sort, direction}) => {
+        const response = await BASE_URL[GET](
+            `products/category/${categoryId}?page=${page}&size=${size}&sort=${sort}&direction=${direction}`
+        );
+        return response.data;
+    }
+);
