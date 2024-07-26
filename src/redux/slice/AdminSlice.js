@@ -82,7 +82,6 @@ const adminSlice = createSlice({
     builder.addCase(getBanners.fulfilled, (state, action) => {
       state.loading = "successed";
       state.data = action.payload;
-      console.log(action.payload);
     });
     builder.addCase(getBanners.rejected, (state, error) => {
       state.loading = "error";
